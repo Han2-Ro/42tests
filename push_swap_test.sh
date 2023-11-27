@@ -1,8 +1,12 @@
 #!/bin/bash
 
-# Number of tests
-num_tests=500
-num_integers=500
+if [ "$#" -ne 2 ]; then
+    echo "Usage: $0 <num_integers> <num_tests>"
+    exit 1
+fi
+
+num_integers=$1
+num_tests=$2
 
 all_tests_passed=true
 lines_printed=()
@@ -19,7 +23,7 @@ for ((i=1; i<=$num_tests; i++)); do
 	num_lines=$(echo "$ps_output" | wc -l)
     # Call push_swap and checker with the generated argument
     test_output=$(./push_swap $arg | ./checker $arg)
-
+    echo $test_output
     # Check the result
     if [ "$test_output" != "OK" ]; then
         echo "Test $i Failed: push_swap output is not valid."
